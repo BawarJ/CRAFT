@@ -13,14 +13,29 @@
         android:layout_height="250dip"></com.jjoe64.graphview.GraphView>
 
     <Switch
-        android:id="@+id/toggleViewOLS"
+        android:id="@+id/toggleViewLinearOLS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:button="@android:color/holo_red_dark"
         android:checked="false"
         android:splitTrack="false"
-        android:text="@string/OLS_toggle_label"
-        android:textOff="@string/OLS_not_visible"
-        android:textOn="@string/OLS_visible" />
+        android:text="@string/Linear_OLS_toggle_label"
+        android:textColorLink="@android:color/holo_red_dark"
+        android:textOff="@string/Linear_OLS_not_visible"
+        android:textOn="@string/Linear_OLS_visible" />
+
+    <Switch
+        android:id="@+id/toggleViewExponentialOLS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:button="@android:color/holo_red_dark"
+        android:checked="false"
+        android:splitTrack="false"
+        android:text="@string/Exponential_OLS_toggle_label"
+        android:textColorLink="@android:color/holo_red_dark"
+        android:textOff="@string/Exponential_OLS_not_visible"
+        android:textOn="@string/Exponential_OLS_visible" />
 
 </LinearLayout>

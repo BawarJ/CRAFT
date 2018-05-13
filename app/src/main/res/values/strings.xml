@@ -24,7 +24,13 @@
     <string name="import_data">Import Data From File</string>
     <string name="file">File:</string>
     <string name="path_to_file">Path to File:</string>
-    <string name="OLS_visible">Ordinary Least Squares is Visible</string>
-    <string name="OLS_not_visible">Ordinary Least Squares is Not Visible</string>
-    <string name="OLS_toggle_label">View Ordinary Least Squares Fitting</string>
+    <string name="Linear_OLS_visible">Linear Ordinary Least Squares is Visible</string>
+    <string name="Linear_OLS_not_visible">Linear Ordinary Least Squares is Not Visible</string>
+    <string name="Linear_OLS_toggle_label">View Linear Ordinary Least Squares Fitting</string>
+    <string name="Exponential_OLS_visible">Exponential Ordinary Least Squares is Visible</string>
+    <string name="Exponential_OLS_not_visible">Exponential Ordinary Least Squares is Not Visible</string>
+    <string name="Exponential_OLS_toggle_label">View Exponential Ordinary Least Squares Fitting</string>
+    <string name="help_viewer">Help Viewer</string>
+    <string name="realtime_data">Import Real-Time Data from Web</string>
+    <string name="URL">API URL</string>
 </resources>

@@ -22,4 +22,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, importDataActivity.class);
         startActivity(intent);
     }
+
+    public void realtimeData(View view) {
+        Intent intent = new Intent(this, realtimeDataActivity.class);
+        startActivity(intent);
+    }
+
+    public void helpViewer(View view) {
+        Intent intent = new Intent(this, helpViewerActivity.class);
+        startActivity(intent);
+    }
 }

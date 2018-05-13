@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import com.jjoe64.graphview.series.DataPoint;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,11 +19,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class importDataActivity extends AppCompatActivity {
 
-    ArrayList<Double> entriesX = new ArrayList<Double>();
-    ArrayList<Double> entriesY = new ArrayList<Double>();
+    ArrayList<DataPoint> dataPoints = new ArrayList<>();
 
     private static final int READ_REQUEST_CODE = 42;
 
@@ -32,7 +34,11 @@ public class importDataActivity extends AppCompatActivity {
         performFileSearch();
     }
 
-    public void addDataRow(View view) {
+    public void openFileViewer(View view) {
+        performFileSearch();
+    }
+
+    public void addDataRow() {
         //TODO: ADD A WAY OF READING FROM FILES
         //Intent intent = new Intent(this, manualDataEntryActivity.class);
         //startActivity(intent);
@@ -42,15 +48,15 @@ public class importDataActivity extends AppCompatActivity {
         TableRow.LayoutParams  params1=new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT,1.0f);
         TableRow.LayoutParams params2=new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT);
         TableLayout tbl=(TableLayout) findViewById(R.id.tableLayout);
-        for(int i=0;i<entriesX.size();i++)
+        for(int i=0;i<dataPoints.size();i++)
         {
             //Creating new tablerows and textviews
             TableRow tr=new TableRow(this);
             EditText x = new EditText(this);
             EditText y = new EditText(this);
             //setting the text
-            x.setText(entriesX.get(i).toString());
-            y.setText(entriesY.get(i).toString());
+            x.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(i).getX()));
+            y.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(i).getY()));
             x.setLayoutParams(params1);
             y.setLayoutParams(params1);
             //the textviews have to be added to the row created
@@ -64,8 +70,7 @@ public class importDataActivity extends AppCompatActivity {
 
     public void plotGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
-        intent.putExtra("ENTRIES_X", entriesX);
-        intent.putExtra("ENTRIES_Y", entriesY);
+        intent.putExtra("DATA_POINTS", dataPoints);
         startActivity(intent);
     }
 
@@ -109,19 +114,19 @@ public class importDataActivity extends AppCompatActivity {
                 uri = resultData.getData();
                 Log.i("Data Retrieval: ", "Uri: " + uri.toString());
                 try {
-                    readTextFromUri(uri);
+                    readDataFromUri(uri);
                 } catch (IOException e) {
                     Log.i("Data Retrieval: ", "IOException in reading from: " + uri.toString());
                 }
                 EditText filePath = (EditText) findViewById(R.id.editTextFilePath);
                 filePath.setText(uri.toString());
 
-                //TODO: ADDDATAROW STUFF SHOULD GO HERE (get rid of add button and make it do this automatically)
+                addDataRow();
             }
         }
     }
 
-    private String readTextFromUri(Uri uri) throws IOException {
+    private String readDataFromUri(Uri uri) throws IOException {
         InputStream inputStream = getContentResolver().openInputStream(uri);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 inputStream));
@@ -129,15 +134,12 @@ public class importDataActivity extends AppCompatActivity {
         String line;
 
         //clear contents of lists ready for fresh import
-        entriesX.clear();
-        entriesY.clear();
+        dataPoints.clear();
 
         while ((line = reader.readLine()) != null) {
             stringBuilder.append(line);
 
-            //TODO: NEED TO ADD ALL ENTRIES IN FILE TO THESE TWO LISTS
-            entriesX.add(Double.parseDouble(line.split(",")[0]));
-            entriesY.add(Double.parseDouble(line.split(",")[1]));
+            dataPoints.add(new DataPoint(Double.parseDouble(line.split(",")[0]), Double.parseDouble(line.split(",")[1])));
         }
 
         //fileInputStream.close();

@@ -55,7 +55,7 @@
                             android:id="@+id/addButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:onClick="addDataRow"
+                            android:onClick="openFileViewer"
                             android:text="@string/plus"
                             android:textSize="18sp" />
 

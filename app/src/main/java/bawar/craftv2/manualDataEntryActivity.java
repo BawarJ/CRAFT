@@ -17,11 +17,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class manualDataEntryActivity extends AppCompatActivity {
 
-    ArrayList<Double> entriesX = new ArrayList<Double>();
-    ArrayList<Double> entriesY = new ArrayList<Double>();
+    ArrayList<DataPoint> dataPoints = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,9 @@ public class manualDataEntryActivity extends AppCompatActivity {
 
         if (inputX.toString().length()!=0 && inputX.toString().length()!=0) {
 
-            entriesX.add(Double.valueOf(inputX.getText().toString()));
-            entriesY.add(Double.valueOf(inputY.getText().toString()));
+            dataPoints.add(new DataPoint(Double.valueOf(inputX.getText().toString()), Double.valueOf(inputY.getText().toString())));
 
-            int lastAdded = entriesX.size()-1;
+            int lastAdded = dataPoints.size()-1;
 
             TableLayout tl = (TableLayout) findViewById(R.id.tableLayout);
             //TODO: ALLOW CHANGES IN EDITTEXT TO UPDATE ARRAYLISTS AND GRAPHS
@@ -56,8 +55,8 @@ public class manualDataEntryActivity extends AppCompatActivity {
             EditText x = new EditText(this);
             EditText y = new EditText(this);
             //setting the text
-            x.setText(entriesX.get(lastAdded).toString());
-            y.setText(entriesY.get(lastAdded).toString());
+            x.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(lastAdded).getX()));
+            y.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(lastAdded).getY()));
             x.setLayoutParams(params1);
             y.setLayoutParams(params1);
             //the textviews have to be added to the row created
@@ -75,8 +74,7 @@ public class manualDataEntryActivity extends AppCompatActivity {
 
     public void plotGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
-        intent.putExtra("ENTRIES_X", entriesX);
-        intent.putExtra("ENTRIES_Y", entriesY);
+        intent.putExtra("DATA_POINTS", dataPoints);
         startActivity(intent);
     }
 }
