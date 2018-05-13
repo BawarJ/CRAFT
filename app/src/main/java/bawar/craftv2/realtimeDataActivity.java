@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -20,9 +20,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Locale;
 
 public class realtimeDataActivity extends AppCompatActivity {
@@ -41,9 +42,6 @@ public class realtimeDataActivity extends AppCompatActivity {
         findViewById(R.id.plotGraphButton).setAlpha(.5f);
     }
 
-    //https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol=BTC&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv
-    //TODO:have refresh button which redownloads and reparses the CSV?
-
     public void addDataRows() {
 
         findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
@@ -59,8 +57,8 @@ public class realtimeDataActivity extends AppCompatActivity {
         {
             //Creating new tablerows and textviews
             TableRow tr=new TableRow(this);
-            EditText x = new EditText(this);
-            EditText y = new EditText(this);
+            TextView x = new TextView(this);
+            TextView y = new TextView(this);
             //setting the text
             x.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(i).getX()));
             y.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(i).getY()));
@@ -78,6 +76,7 @@ public class realtimeDataActivity extends AppCompatActivity {
     public void plotGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra("DATA_POINTS", dataPoints);
+        intent.putExtra("IS_DATE", true);
         startActivity(intent);
     }
 
@@ -89,13 +88,12 @@ public class realtimeDataActivity extends AppCompatActivity {
         try {
             String root = Environment.getExternalStorageDirectory().toString();
 
-            System.out.println("Downloading");
-            url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol=BTC&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv");
+            //url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol=BTC&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv");
+            url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv");
 
             URLConnection con = url.openConnection();
             con.connect();
 
-            //is = con.getInputStream(); //url.openStream()
             is = new BufferedInputStream(url.openStream(), 8192);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
@@ -105,23 +103,15 @@ public class realtimeDataActivity extends AppCompatActivity {
             dataPoints.clear();
 
             String line = "";
-            br.readLine();//skip line 1?
+            br.readLine();//skip line 1
             while ((line = br.readLine()) != null) {
                 sb.append(line);
-                /*dataPoints.add(new DataPoint(Double.parseDouble(line.split(",")[0].split(" ")[1].replaceAll(":", ""))
-                        ,Double.parseDouble(line.split(",")[1])));*/
-
-                Log.i("sb: ", sb.toString());
-                Log.i("line after split[0]: ", line.split(",")[0]);
-                Date date = Date.valueOf(line.split(",")[0].split(" ")[0]);
-
-                Log.i("date: ", date.toString());
-
-                dataPoints.add(new DataPoint(date,      //throwing exception
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = sdf.parse(line.split(",")[0]);
+                long time = date.getTime();
+                dataPoints.add(new DataPoint(time,
                         Double.parseDouble(line.split(",")[1])));
             }
-
-            Log.i("DataPoint: ", dataPoints.toString());
 
             Collections.reverse(dataPoints);  //X values need to be in ascending order so must reverse the arraylist
 
@@ -129,9 +119,7 @@ public class realtimeDataActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.i("Data Retrieval: ", "Exception occurred: " + e.getMessage());
-            //TODO: Could display output if the API gives that funny error
         }
-
         Log.i("Data Retrieval: ", "URL: " + url.toString());
     }
 

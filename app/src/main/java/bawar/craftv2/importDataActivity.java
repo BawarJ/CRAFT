@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -39,9 +40,6 @@ public class importDataActivity extends AppCompatActivity {
     }
 
     public void addDataRow() {
-        //TODO: ADD A WAY OF READING FROM FILES
-        //Intent intent = new Intent(this, manualDataEntryActivity.class);
-        //startActivity(intent);
 
         TableLayout tl = (TableLayout) findViewById(R.id.tableLayout);
 
@@ -52,8 +50,8 @@ public class importDataActivity extends AppCompatActivity {
         {
             //Creating new tablerows and textviews
             TableRow tr=new TableRow(this);
-            EditText x = new EditText(this);
-            EditText y = new EditText(this);
+            TextView x = new TextView(this);
+            TextView y = new TextView(this);
             //setting the text
             x.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(i).getX()));
             y.setText(String.format(Locale.ENGLISH, "%.3f", dataPoints.get(i).getY()));
@@ -119,7 +117,7 @@ public class importDataActivity extends AppCompatActivity {
                     Log.i("Data Retrieval: ", "IOException in reading from: " + uri.toString());
                 }
                 EditText filePath = (EditText) findViewById(R.id.editTextFilePath);
-                filePath.setText(uri.toString());
+                filePath.setText(uri.getLastPathSegment().toString().split("/")[1]);
 
                 addDataRow();
             }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,7 +10,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="461dp">
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/plotGraphButton"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,9 +51,12 @@
                         android:id="@+id/editTextX"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:accessibilityTraversalAfter="@id/editTextY"
                         android:ems="10"
                         android:hint="@string/enter_X"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:nextFocusForward="@id/editTextY"
+                        android:nextFocusRight="@id/editTextY" />
 
                     <EditText
                         android:id="@+id/editTextY"
@@ -56,7 +64,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/enter_Y"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:nextFocusDown="@id/addButton" />
                 </TableRow>
             </TableLayout>
 
@@ -81,7 +90,12 @@
         android:id="@+id/plotGraphButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:onClick="plotGraph"
-        android:text="@string/plot_graph" />
-
-</LinearLayout>
+        android:text="@string/plot_graph"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

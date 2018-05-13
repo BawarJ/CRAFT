@@ -33,4 +33,9 @@
     <string name="help_viewer">Help Viewer</string>
     <string name="realtime_data">Import Real-Time Data from Web</string>
     <string name="URL">API URL</string>
+    <string name="save_graph">Save Snapshot of Graph</string>
+    <string name="cursor_mode_enabled">Cursor Mode Enabled</string>
+    <string name="cursor_mode_disabled">Cursor Mode Disabled</string>
+    <string name="enable_cursor_mode">Enable Cursor Mode</string>
+    <string name="open">Open...</string>
 </resources>

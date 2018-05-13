@@ -8,12 +8,29 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
+/**
+ * This class implements two different regression analysis algorithms, namely the
+ * Linear Ordinary Least Squares (OLS) algorithm and the Exponential OLS algorithm.
+ * There is
+ * @author bawar
+ * @version 1.0
+ */
 public class RegressionAnalysis {
 
+    /**
+     * This method will calculate the linear regression of the data and provide the data points
+     * to allow this to be plotted.
+     * <p>
+     *     The sources used to help code this were:
+     *     <i>https://www.varsitytutors.com/hotmath/hotmath_help/topics/line-of-best-fit</i> and
+     *     <i>https://stackoverflow.com/questions/12946341/algorithm-for-scatter-plot-best-fit-line</i>
+     * </p>
+     * @param dataPoints list of DataPoints
+     * @param toggle switch controlling the visibility of this line of best fit
+     * @return The LineGraphSeries object, ready to add to the graph object in the calling method.
+     */
     public LineGraphSeries<DataPoint> calculateLinearOLS(ArrayList<DataPoint> dataPoints, Switch toggle) {
-        //calculate Linear OLS line of best fit
-        //https://www.varsitytutors.com/hotmath/hotmath_help/topics/line-of-best-fit
-        //https://stackoverflow.com/questions/12946341/algorithm-for-scatter-plot-best-fit-line
+
         double sumX=.0, sumY=.0, meanX, meanY, m, c, sumXY=.0, sumXSquared=.0;
         int total = dataPoints.size();
 
@@ -45,9 +62,19 @@ public class RegressionAnalysis {
         return series;
     }
 
+    /**
+     * This method will calculate the exponential regression of the data and provide the data points
+     * to allow this to be plotted.
+     * <p>
+     *     The source used to help code this were:
+     *     <i>http://www.bragitoff.com/2015/09/c-program-for-exponential-fitting-least-squares/</i>
+     * </p>
+     * @param dataPoints list of DataPoints
+     * @param toggle switch controlling the visibility of this curve of best fit
+     * @return The LineGraphSeries object, ready to add to the graph object in the calling method.
+     */
     public LineGraphSeries<DataPoint> calculateExponentialOLS(ArrayList<DataPoint> dataPoints, Switch toggle) {
-        //calculate Exponential OLS line of best fit
-        //http://www.bragitoff.com/2015/09/c-program-for-exponential-fitting-least-squares/
+
         double sumX=.0, sumY=.0, a=.0, b=.0, c=.0, sumXY=.0, sumXSquared=.0;
         int total = dataPoints.size();
         double[] lnY = new double[total];
@@ -82,8 +109,4 @@ public class RegressionAnalysis {
         return series;
     }
 
-
-
-    //TODO: in report, mention that if I had more time I would also have added the Logarithmic plot
-    //TODO: in report, mention that if I had more time I would also have added MOVING AVERAGES which are much more relevant to stock prices
 }
