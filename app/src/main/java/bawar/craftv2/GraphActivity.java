@@ -52,6 +52,7 @@ public class GraphActivity extends AppCompatActivity {
 
         ArrayList<DataPoint> dataPoints = (ArrayList<DataPoint>) getIntent().getSerializableExtra("DATA_POINTS");
         boolean isDate = (boolean) getIntent().getBooleanExtra("IS_DATE", false);
+        String coinSymbol = (String) getIntent().getStringExtra("COIN_SYMBOL");
 
         final GraphView graph = findViewById(R.id.graph);
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(45);
@@ -67,7 +68,8 @@ public class GraphActivity extends AppCompatActivity {
 
         //format X and Y axes
         if (isDate) {
-            graph.setTitle("Daily Bitcoin (BTC) Value in GBP(£)");
+
+            graph.setTitle("Daily " + coinSymbol + " Value in GBP(£)");
             graph.getGridLabelRenderer().setVerticalAxisTitle("Price (GBP)");
             graph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
 

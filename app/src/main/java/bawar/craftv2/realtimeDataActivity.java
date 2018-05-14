@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -29,17 +31,54 @@ import java.util.Locale;
 public class realtimeDataActivity extends AppCompatActivity {
 
     ArrayList<DataPoint> dataPoints = new ArrayList<>();
+    String coinSymbol = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_realtime_data);
 
-        final DownloadTask downloadTask = new DownloadTask();
-        downloadTask.execute();
-
         findViewById(R.id.plotGraphButton).setClickable(false);
         findViewById(R.id.plotGraphButton).setAlpha(.5f);
+        findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+
+
+        Spinner coinSelectSpinner = findViewById(R.id.coinSelectSpinner);
+        coinSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Bitcoin"))
+                {
+                    coinSymbol = "BTC";
+                }
+                if(selectedItem.equals("Ethereum"))
+                {
+                    coinSymbol = "ETH";
+                }
+                if(selectedItem.equals("Ripple"))
+                {
+                    coinSymbol = "XRP";
+                }
+                if(selectedItem.equals("Bitcoin Cash"))
+                {
+                    coinSymbol = "BCH";
+                }
+                if(selectedItem.equals("EOS"))
+                {
+                    coinSymbol = "EOS";
+                }
+                if(selectedItem.equals("Litecoin"))
+                {
+                    coinSymbol = "LTC";
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                //do something
+            }
+        });
     }
 
     public void addDataRows() {
@@ -77,6 +116,7 @@ public class realtimeDataActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra("DATA_POINTS", dataPoints);
         intent.putExtra("IS_DATE", true);
+        intent.putExtra("COIN_SYMBOL", coinSymbol);
         startActivity(intent);
     }
 
@@ -89,7 +129,7 @@ public class realtimeDataActivity extends AppCompatActivity {
             String root = Environment.getExternalStorageDirectory().toString();
 
             //url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol=BTC&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv");
-            url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv");
+            url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=" + coinSymbol + "&market=GBP&apikey=41YYSI9MSFPQBN01&datatype=csv");
 
             URLConnection con = url.openConnection();
             con.connect();
@@ -121,6 +161,12 @@ public class realtimeDataActivity extends AppCompatActivity {
             Log.i("Data Retrieval: ", "Exception occurred: " + e.getMessage());
         }
         Log.i("Data Retrieval: ", "URL: " + url.toString());
+    }
+
+    public void startDownload(View view) {
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        final DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute();
     }
 
     /** AsyncTask to download data */

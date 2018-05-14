@@ -14,7 +14,7 @@
     <string name="enter_file_name">Enter file name</string>
     <string name="create_new_project">Create New Project</string>
     <string name="X_Title">X (Time)</string>
-    <string name="Y_Title">Y (Stock Value)</string>
+    <string name="Y_Title">Y (Stock Value in GBP)</string>
     <string name="enter_X">Enter X Value:</string>
     <string name="enter_Y">Enter Y Value:</string>
     <string name="update">Update</string>
@@ -38,4 +38,15 @@
     <string name="cursor_mode_disabled">Cursor Mode Disabled</string>
     <string name="enable_cursor_mode">Enable Cursor Mode</string>
     <string name="open">Open...</string>
+    <string name="select_coin">Select Coin...</string>
+
+    <string-array name="Coin_Values">
+        <item> </item>
+        <item>Bitcoin</item>
+        <item>Ethereum</item>
+        <item>Ripple</item>
+        <item>Bitcoin Cash</item>
+        <item>EOS</item>
+        <item>Litecoin</item>
+    </string-array>
 </resources>
