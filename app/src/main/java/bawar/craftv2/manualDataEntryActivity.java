@@ -28,6 +28,9 @@ public class manualDataEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_data_entry);
+
+        findViewById(R.id.plotGraphButton).setClickable(false);
+        findViewById(R.id.plotGraphButton).setAlpha(.5f);
     }
 
     public void addDataRow(View view) {
@@ -100,6 +103,11 @@ public class manualDataEntryActivity extends AppCompatActivity {
         inputX.setText("");
         inputY.setText("");
         inputX.requestFocus();
+
+        if (dataPoints.size() >= 2) {
+            findViewById(R.id.plotGraphButton).setClickable(true);
+            findViewById(R.id.plotGraphButton).setAlpha(1f);
+        }
     }
 
     public void plotGraph(View view) {

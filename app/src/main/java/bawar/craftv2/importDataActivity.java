@@ -32,7 +32,12 @@ public class importDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_data);
+
+        findViewById(R.id.plotGraphButton).setClickable(false);
+        findViewById(R.id.plotGraphButton).setAlpha(.5f);
+
         performFileSearch();
+
     }
 
     public void openFileViewer(View view) {
@@ -62,6 +67,12 @@ public class importDataActivity extends AppCompatActivity {
             tr.addView(y);
             tr.setLayoutParams(params2);
             tl.addView(tr);
+        }
+
+        EditText filePath = findViewById(R.id.editTextFilePath);
+        if (filePath.getText() != null) {
+            findViewById(R.id.plotGraphButton).setClickable(true);
+            findViewById(R.id.plotGraphButton).setAlpha(1f);
         }
 
     }
