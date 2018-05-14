@@ -107,6 +107,7 @@ public class GraphActivity extends AppCompatActivity {
         for (int i=0; i<dataPoints.size();++i) {
             series.appendData(dataPoints.get(i), true, dataPoints.size());
         }
+        series.setAnimated(true);
         graph.addSeries(series);
 
         Switch toggleLinear = findViewById(R.id.toggleViewLinearOLS);
