@@ -22,12 +22,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This class controls the scenario in the app that the data is imported from a csv file.
+ * @author bawar
+ * @version 1.0
+ */
 public class importDataActivity extends AppCompatActivity {
 
     ArrayList<DataPoint> dataPoints = new ArrayList<>();
 
     private static final int READ_REQUEST_CODE = 42;
 
+    /**
+     * The onCreate method is called when a new instance of the activity is created.
+     * It is overridden and the plot graph button is greyed out until data is entered.
+     * @param savedInstanceState stores data on activity to allow it to restore its state if user leaves and returns.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +50,18 @@ public class importDataActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This will call the performFileSearch() method.
+     * @param view the view that provides the context for this.
+     */
     public void openFileViewer(View view) {
         performFileSearch();
     }
 
+    /**
+     * This method will use the pulled data from the file and add them to new rows so they
+     * are visible within the app screen rather than just being saved as an array.
+     */
     public void addDataRow() {
 
         TableLayout tl = (TableLayout) findViewById(R.id.tableLayout);
@@ -77,6 +95,11 @@ public class importDataActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method will send the data through an intent to the next GraphActivity view
+     * so that the data can be plotted on the graph.
+     * @param view the view that provides the context for this.
+     */
     public void plotGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra("DATA_POINTS", dataPoints);

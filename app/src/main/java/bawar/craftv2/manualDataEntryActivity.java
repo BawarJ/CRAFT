@@ -20,10 +20,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This class controls the scenario in the app that the data is imported manually.
+ * @author bawar
+ * @version 1.0
+ */
 public class manualDataEntryActivity extends AppCompatActivity {
 
     ArrayList<DataPoint> dataPoints = new ArrayList<>();
 
+    /**
+     * The onCreate method is called when a new instance of the activity is created.
+     * It is overridden and the plot graph button is greyed out until data is entered.
+     * @param savedInstanceState stores data on activity to allow it to restore its state if user leaves and returns.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +43,10 @@ public class manualDataEntryActivity extends AppCompatActivity {
         findViewById(R.id.plotGraphButton).setAlpha(.5f);
     }
 
+    /**
+     * This method will allow data to be input to an array and add it all to new rows so they
+     * are visible within the app screen rather than just being saved within the code.
+     */
     public void addDataRow(View view) {
 
         EditText inputX = (EditText) findViewById(R.id.editTextX);
@@ -110,6 +124,11 @@ public class manualDataEntryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method will send the data through an intent to the next GraphActivity view
+     * so that the data can be plotted on the graph.
+     * @param view the view that provides the context for this.
+     */
     public void plotGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra("DATA_POINTS", dataPoints);

@@ -28,11 +28,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * This class controls the scenario in the app that the data is imported from the AlphaVantage API.
+ * @author bawar
+ * @version 1.0
+ */
 public class realtimeDataActivity extends AppCompatActivity {
 
     ArrayList<DataPoint> dataPoints = new ArrayList<>();
     String coinSymbol = null;
 
+    /**
+     * The onCreate method is called when a new instance of the activity is created.
+     * It is overridden and the plot graph button is greyed out until data is entered.
+     * @param savedInstanceState stores data on activity to allow it to restore its state if user leaves and returns.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +91,10 @@ public class realtimeDataActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method will use the pulled data from the web and add them to new rows so they
+     * are visible within the app screen rather than just being saved as an array.
+     */
     public void addDataRows() {
 
         findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
@@ -112,6 +126,14 @@ public class realtimeDataActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method will send the data through an intent to the next GraphActivity view
+     * so that the data can be plotted on the graph.
+     * In this case, there is some extra data passed through which checks if the
+     * X axis should be rendered as dates or normal decimal values.
+     * It also contains the coin symbol used so that it can be inserted into the graph title.
+     * @param view the view that provides the context for this.
+     */
     public void plotGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra("DATA_POINTS", dataPoints);
@@ -120,6 +142,11 @@ public class realtimeDataActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * This method will fetch the real-time data from the API. The coinSymbol variable will be used
+     * to customise which coin data to retrieve.
+     * @throws IOException an IO exception will be thrown if there is something wrong with the URL
+     */
     public void fetchData() throws IOException {
         URL url = null;
         InputStream is = null;
@@ -163,6 +190,11 @@ public class realtimeDataActivity extends AppCompatActivity {
         Log.i("Data Retrieval: ", "URL: " + url.toString());
     }
 
+    /**
+     * This method will begin the AsyncTask to download the data in the background
+     * so as not to interfere with the main UI thread.
+     * @param view the view that provides the context for this.
+     */
     public void startDownload(View view) {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         final DownloadTask downloadTask = new DownloadTask();

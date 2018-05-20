@@ -200,6 +200,11 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method will grant permissions to write to external storage. It will be used
+     * to write the PNG snapshot of the graph to the device.
+     * @param view the view that provides the context for this.
+     */
     public void requestPermissions(View view) {
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -229,6 +234,12 @@ public class GraphActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is called when the result of the Request Permissions task is retrieved.
+     * @param requestCode refers to the custom integer (38) that defines the requested permission.
+     * @param permissions array of permissions.
+     * @param grantResults the integer values of the granted results.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 /**
  * This class implements two different regression analysis algorithms, namely the
  * Linear Ordinary Least Squares (OLS) algorithm and the Exponential OLS algorithm.
- * There is
  * @author bawar
  * @version 1.0
  */

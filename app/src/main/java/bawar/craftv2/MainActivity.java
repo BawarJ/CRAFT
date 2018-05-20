@@ -12,7 +12,6 @@ import android.view.View;
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity {
-//TODO: ADD JAVADOCS
 
     /**
      * The onCreate method has been overridden but nothing special happens here in this case.

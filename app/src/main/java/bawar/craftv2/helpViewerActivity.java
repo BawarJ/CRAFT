@@ -14,7 +14,7 @@ public class helpViewerActivity extends AppCompatActivity {
 
     /**
      * The onCreate method has been overridden but nothing special happens here in this case.
-     * @param savedInstanceState
+     * @param savedInstanceState stores data on activity to allow it to restore its state if user leaves and returns.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
